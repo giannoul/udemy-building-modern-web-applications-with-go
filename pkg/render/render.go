@@ -7,25 +7,37 @@ import (
 	"net/http"
 	"path/filepath"
 	"text/template"
+
+	"github.com/giannoul/udemy-building-modern-web-applications-with-go/pkg/config"
 )
 
 // We may define our custom functions and pass them to the templates in order to be used there
 var functions = template.FuncMap{}
 
+var app *config.AppConfig
+
+// NewTemplates sets the config for the render package
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
+
 // RenderTemplate renders templates using text/templates
 func RenderTemplate(respWriter http.ResponseWriter, tmpl string) {
-	tc, err := CreateTemplateCache()
-	if err != nil {
-		log.Fatal(err)
+	var tc map[string]*template.Template
+	if app.UseCache {
+		tc = app.TemplateCache
+	} else {
+		tc, _ = CreateTemplateCache()
 	}
+
 	t, ok := tc[tmpl]
 	if !ok {
-		log.Fatal(err)
+		log.Fatal("Could not find template from cache")
 	}
 
 	buf := new(bytes.Buffer)
 	_ = t.Execute(buf, nil)
-	_, err = buf.WriteTo(respWriter)
+	_, err := buf.WriteTo(respWriter)
 	if err != nil {
 		fmt.Println("Error writing to the response writer", err)
 	}

@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/giannoul/udemy-building-modern-web-applications-with-go/pkg/config"
+	"github.com/giannoul/udemy-building-modern-web-applications-with-go/pkg/models"
 	"github.com/giannoul/udemy-building-modern-web-applications-with-go/pkg/render"
 )
 
@@ -29,11 +30,16 @@ func NewHandlers(r *Repository) {
 
 // Home page handler
 func (m *Repository) Home(respWriter http.ResponseWriter, req *http.Request) {
-	render.RenderTemplate(respWriter, "home.page.tmpl")
+	render.RenderTemplate(respWriter, "home.page.tmpl", &models.TemplateData{})
 }
 
 // About page handler
 func (m *Repository) About(respWriter http.ResponseWriter, req *http.Request) {
 
-	render.RenderTemplate(respWriter, "about.page.tmpl")
+	// business logic
+	stringMap := make(map[string]string)
+	stringMap["test"] = "hello again"
+	render.RenderTemplate(respWriter, "about.page.tmpl", &models.TemplateData{
+		StringMap: stringMap,
+	})
 }

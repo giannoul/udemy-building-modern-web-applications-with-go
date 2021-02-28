@@ -17,17 +17,27 @@ It is common to put the `main` package in `cmd/web`. At this moment the director
 .
 ├── cmd
 │   └── web
-│       └── main.go #the main package + entry point of the application
+│       ├── main.go
+│       ├── middleware.go
+│       └── routes.go
 ├── go.mod
+├── go.sum
+├── handlers.go
+├── main.go
 ├── pkg
+│   ├── config
+│   │   └── config.go
 │   ├── handlers
-│   │   └── handlers.go #the route hanlders
+│   │   └── handlers.go
+│   ├── models
+│   │   └── templatedata.go
 │   └── render
-│       └── render.go   #the template renderer
+│       └── render.go
 ├── README.md
 └── templates
-    ├── about.page.tmpl #page template
-    └── home.page.tmpl  # ^ same thing
+    ├── about.page.tmpl
+    ├── base.layout.tmpl
+    └── home.page.tmpl
 ```
 
 

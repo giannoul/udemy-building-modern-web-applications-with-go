@@ -8,6 +8,13 @@
                 <p>This is a paragraph, not cached</p>
 
                 <p>This came from the template: {{index .StringMap "test"}} </p>
+                <p>
+                    {{if ne (index .StringMap "remote_ip") ""}}
+                        Your remote IP is: {{index .StringMap "remote_ip"}} 
+                    {{else}}
+                        I can't find your IP yet. Please visit <a href="/">Home Page</a>
+                    {{end}}
+                </p>
             </div>
         </div>
     </div>
